@@ -1,0 +1,94 @@
+<html>
+    <head>
+        <link rel = "stylesheet" type = "text/css" href = "HomeCSS.css">
+        
+        <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type = "text/javascript"></script>
+        
+        <script>
+            $(document).ready(function() {
+                //Given JSON server
+                var root = 'https://jsonplaceholder.typicode.com';
+                var i = 0;
+                var x;
+
+                //Displaying data from JSON via AJAX
+                for(x = 1; x < 11; x++){
+                    //create postbox div
+                    var new_postbox = document.createElement("div");
+                    new_postbox.className = "postbox";
+                    
+                    //create title span
+                    var new_title = document.createElement("span");
+                    new_title.className = "title";
+                    
+                    var new_span = document.createElement("span");
+                    
+                    //create username link
+                    var new_username = document.createElement("a");
+                    new_username.className = "username";
+                    $(new_username).attr("href", "UserProfile.html");
+                    
+                    //create content paragraph
+                    var new_content = document.createElement("p");
+                    new_content.className = "postContent";
+                    
+                    
+                    //Displays title and content of latest 10 posts
+                    $.ajax({
+                        url: root + '/posts/',
+                        data: {
+                            userId: x
+                        },
+                        type: "GET",
+                        dataType: "json",
+                        async: false,
+                        success: function(data) {
+                            $(new_title).text(data[i].title);
+                            $(new_content).text(data[i].body);
+                        }
+                    });
+                    
+                    
+                    //Displays username
+                    $.ajax({
+                        url: root + '/users/',
+                        data: {
+                            id: x
+                        },
+                        type: "GET",
+                        dataType: "json",
+                        async: false,
+                        success: function(data) {
+                            $(new_username).text(data[i].username);
+                        }
+                    });
+                    
+                    new_span.textContent = " by ";
+                    new_span.appendChild(new_username);
+                    
+                    new_postbox.appendChild(new_title);
+                    new_postbox.appendChild(new_span);
+                    new_postbox.appendChild(new_content);
+                    
+                    $("#content").append(new_postbox);
+                }
+                
+                var loadmore = document.createElement("button");
+                var buttontext = document.createTextNode("Load More");
+                loadmore.appendChild(buttontext);
+
+                if(i < 10)
+                    $("#content").append(loadmore);
+                
+            });
+        </script>
+    </head>
+    <body>
+        <h1>PAD</h1>
+        <p>Pat + Allan + Denis</p>
+        <div id = "menu">
+            <a href = "Home.html">Home</a> | <a href = "Photos.html">Photos</a> | <a href = "Albums.html">Albums</a> | <a href = "Users.html">Users</a>
+        </div>
+        <div id = "content">Recent Posts</div>
+    </body>
+</html>

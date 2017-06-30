@@ -1,0 +1,165 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="PhotosCSS.css">
+        
+        <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type = "text/javascript"></script>
+        
+        <script>
+		var root = 'https://jsonplaceholder.typicode.com';
+            
+			function zoomIn(photoid, x, y){
+				$("#inviBox").fadeToggle();
+				
+				$.ajax({
+					url: root + '/photos?id='+photoid,
+					method: 'GET'
+				}).then(function(data) {
+					$("#inviContent").attr("src", data[0].url);
+				    $("#photoTitle").text("Title: " + data[0].title);  
+				});
+                $.ajax({
+                    url: root + '/users?id='+y,
+                    method: 'GET'
+                }).then(function(data) {
+                    $("#photoBy").text("By: " + data[0].username);
+                });
+                $.ajax({
+                    url: root + '/albums?id='+x,
+                    method: 'GET'
+                }).then(function(data) {
+                    $("#photoAlbum").text("Album: " + data[0].title);
+                });
+			}
+            
+			function getPhotoId(photoid){
+				return photoid.substring(3,photoid.length);
+			}
+            
+            $(document).ready(function() {
+                var root = 'https://jsonplaceholder.typicode.com'; 
+                var x = 1, y = 1;
+                var i;
+                
+                for(i = 0; i < 10; i++){
+                    var new_photobox = document.createElement("div");
+                    new_photobox.className = "photobox";
+
+                    var new_img = document.createElement("img");
+                    new_img.className = "thumbNailPic";
+
+                    var new_title = document.createElement("p");
+                    new_title.className = "phototitle";
+
+					var idHolder = document.createElement("span");
+					idHolder.className = "idHolder";	
+					
+                    $.ajax({
+                        url: root + "/photos/",
+                        data: {
+                            albumId: x
+                        },
+                        type: "GET",
+                        dataType: "json",
+                        async: false,
+                        success: function(data) {
+                            $(new_img).attr("src", data[i].thumbnailUrl);
+                            $(new_title).text(data[i].title);
+							$(idHolder).attr("id", "id:"+data[i].id);
+                        }
+                    });
+                    
+                    new_photobox.appendChild(new_img);
+                    new_photobox.appendChild(new_title);
+                    new_photobox.appendChild(idHolder);
+                    
+                    $("#photosContainer").append(new_photobox);
+                }
+                
+                var seemore = document.createElement("button");
+                var buttontext = document.createTextNode("See More");
+                seemore.appendChild(buttontext);
+                $("#morebutton").append(seemore);
+
+                $(seemore).click(function() {
+                    var root = 'https://jsonplaceholder.typicode.com';
+                    var n = i;
+            
+                    for(i = n; i < n+10; i++){
+                    
+                        var new_photobox =
+                        document.createElement("div");
+                        new_photobox.className = "photobox";
+
+                        var new_img = document.createElement("img");
+                        new_img.className = "thumbNailPic";
+                        
+                        var new_title = document.createElement("p");
+                        new_title.className = "title";
+                        
+                        var idHolder = document.createElement("span");
+					    idHolder.className = "idHolder";	
+                  
+                        $.ajax({
+                            url: root + '/photos/',
+                            data: {
+                                albumId: x
+                            },
+                            type: "GET",
+                            dataType: "json",
+                            async: false,
+                            success: function(data) {
+                                $(new_img).attr("src", data[i].thumbnailUrl);
+                                $(new_title).text(data[i].title);
+                                $(idHolder).attr("id", "id:"+data[i].id);
+                            }
+                        });
+                        
+                        new_photobox.appendChild(new_img);
+                        new_photobox.appendChild(new_title);
+                        new_photobox.appendChild(idHolder);
+
+                       $("#photosContainer").append(new_photobox);
+                       }
+                    
+                    if(n == 50){
+                        x++;
+                        i = 0;
+                    }
+                    if(n > 5000)
+                        y++;
+                    
+                });
+				
+				$(document).on('click', ".photobox", function() {
+
+					var phoId = parseInt(getPhotoId($(this).children('span').attr('id')));
+                    
+					zoomIn(phoId, x, y);
+				});
+                
+				$("#inviBox").click(function(){
+					$("#inviBox").fadeToggle();
+				});
+                
+            });
+        </script>
+    </head>
+    <body>
+        <h1>PAD</h1>
+        <p>Pat + Allan + Denis</p>
+        <div id = "menu">
+            <a href = "Home.html">Home</a> | <a href = "Photos.html">Photos</a> | <a href = "Albums.html">Albums</a> | <a href = "Users.html">Users</a>
+        </div>
+        <p id = "allphotos">All Photos</p>
+        <div id = "photos">
+			<div id="inviBox">
+                <img id="inviContent"><br>
+                <span id="photoTitle"></span><br>
+                <span id="photoBy"></span><br>
+                <span id="photoAlbum"></span>
+            </div>
+            <div id = "photosContainer"></div>
+            <div id = "morebutton"></div>
+        </div>
+    </body>
+</html>

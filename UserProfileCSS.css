@@ -1,0 +1,149 @@
+body {
+    background-image: url("bg.jpg");
+    font-family: Century Gothic;
+    color: darkred;
+    text-align: center;
+}
+
+h1{
+    font-size: 80px;
+    margin-bottom: 10px;
+}
+
+a{
+    color: darkred;
+    text-decoration-line: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+p {
+    font-size: 12px;
+    padding-bottom: 25px;
+}
+
+button {
+    font-size: 16px;
+    border: 10px none;
+    border-radius: 25px;
+    background-color: skyblue;
+	text-align: center;
+    margin: 5px 15px;
+    padding: 5px 15px;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+span {
+    line-height: 150%;
+    font-weight: normal;
+}
+
+section {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    text-align: left;
+    height: auto;
+    background: rgba(255, 255, 255,0.5)
+}
+
+.image {
+    height: 100px;
+    width: 100px;
+    border: 1px solid black;
+    margin: 10px;
+}
+
+.profilepostbox {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    text-align: left;
+    height: auto;
+    background: rgba(255, 255, 255,0.5)
+}
+
+.title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.postContent{
+    position: relative;
+    word-wrap: break-word;
+    margin-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 16px;
+}
+
+#menu {
+    padding: 15px;
+    margin-bottom: 20px;
+    background: rgba(240, 248, 255, 0.6);
+}
+
+#userprofile {
+    font-size: 16px;
+}
+
+#profilecontent {
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+#data_and_albums {
+    height: auto;    
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 10px;
+}
+
+#name {
+    font-weight: bold;
+    font-size: 22px;
+}
+
+#albumbox {
+    height: auto;
+    width: auto;
+    border: 1px solid black;
+    border-radius: 5px;
+    background: rgba(255, 255, 255,0.5)
+}
+
+#imgbox {
+    margin: auto;
+    height: auto;
+    width: 610px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#posts {
+    margin: 10px;
+    height: auto;
+    width: 1180px;
+    text-align: left;
+    position: relative;
+    left: 70px;
+}
+
+#moreposts {
+    position: relative;
+    left: 500px;
+}

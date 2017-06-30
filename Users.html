@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="UsersCSS.css">
+        
+        <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type = "text/javascript"></script>
+        
+        <script>
+            $(document).ready(function() {
+                //Given JSON server
+                var root = 'https://jsonplaceholder.typicode.com';
+                var i = 0;
+                var x;
+                
+                //Displaying data from JSON via AJAX
+                for(x = 1; x < 11; x++){
+                    var new_username = document.createElement("a");
+                    $(new_username).attr("href", "UserProfile.html");
+
+                    $.ajax({
+                            url: root + '/users/',
+                            data: {
+                                id: x
+                            },
+                            type: "GET",
+                            dataType: "json",
+                            async: false,
+                            success: function(data) {
+                                $(new_username).text(data[i].username);
+                            }
+                    });
+                    
+                    $("#userlist").append(new_username);
+                    $("#userlist").append("<br>");
+                }
+            });
+        </script>
+        
+    </head>
+    <body>
+        <h1>PAD</h1>
+        <p>Pat + Allan + Denis</p>
+        <div id = "menu">
+            <a href = "Home.html">Home</a> | <a href = "Photos.html">Photos</a> | <a href = "Albums.html">Albums</a> | <a href = "Users.html">Users</a>
+        </div>
+        <p id = "allusers">All Users</p>
+        <div id = "userlist"></div>
+    </body>
+</html>

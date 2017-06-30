@@ -1,0 +1,141 @@
+<html>
+    <head>
+        <link rel = "stylesheet" type = "text/css" href = "UserProfileCSS.css">
+        
+        <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type = "text/javascript"></script>
+        
+        <script>
+            $(document).ready(function() {
+                //Given JSON server
+                var root = 'https://jsonplaceholder.typicode.com';
+                var x = 1;
+                
+                //Displaying data from JSON via AJAX
+                //Displays user data
+                $.ajax({
+                    url: root + '/users/',
+                    data: {
+                        userId: x
+                    },
+                    type: "GET",
+                    dataType: "json",
+                    success: function(data) {
+                        $("span#name").text(data[0].name);
+                        $("span#uname").text(data[0].username);
+                        $("span#email").text(data[0].email);
+                        $("span#address").text(data[0].address.suite + ", " + data[0].address.street + ", " + data[0].address.city);
+                        $("span#zipcode").text(data[0].address.zipcode);
+                        $("span#phone").text(data[0].phone);
+                        $("span#website").text(data[0].website);
+                        $("span#company").text(data[0].company.name);
+                        $("span#catchphrase").text(data[0].company.catchPhrase);
+                        $("span#bs").text(data[0].company.bs);
+                    }
+                });
+                //creates a div that contains the user's recent albums
+                for(i = 1; i <= 7; i++){
+                    var new_image = document.createElement("img");
+                    new_image.className = "image";
+                
+                    $.ajax({
+                        url: root + '/photos/',
+                        data: {
+                            albumId: i
+                        },
+                        type: "GET",
+                        dataType: "json",
+                        async: false,
+                        success: function(data) {
+                            $(new_image).attr("src", data[0].thumbnailUrl);
+                        }
+                    });
+                    
+                    $("#imgbox").append(new_image);
+                }
+                //creates divs & paragraphs needed to show all posts per user
+                var i;
+                for(i = 0; i < 5; i++){
+                    //create postbox div
+                    var new_postbox = document.createElement("div");
+                    new_postbox.className = "profilepostbox";
+                    
+                    //create title paragraph
+                    var new_title = document.createElement("p");
+                    new_title.className = "title";
+                    
+                    //create content paragraph
+                    var new_content = document.createElement("p");
+                    new_content.className = "postcontent";
+                    
+                    //get title and content
+                    $.ajax({
+                        url: root + '/posts/',
+                        data: {
+                            userId: x
+                        },
+                        type: "GET",
+                        dataType: "json",
+                        async: false,
+                        success: function(data) {
+                            $(new_title).text(data[i].title);
+                            $(new_content).text(data[i].body);
+                        }
+                    });
+
+                    new_postbox.appendChild(new_title);
+                    new_postbox.appendChild(new_content);
+
+                    $("#posts").append(new_postbox);
+                }
+                
+                var seemore = document.createElement("button");
+                var buttontext = document.createTextNode("See More");
+                $(seemore).attr("id", "moreposts");
+                seemore.appendChild(buttontext);
+                $("#posts").append(seemore);
+            });
+        </script>
+    </head>
+    <body>
+        <h1>PAD</h1>
+        <p>Pat + Allan + Denis</p>
+        <div id = "menu">
+            <a href = "Home.html">Home</a> | <a href = "Photos.html">Photos</a> | <a href = "Albums.html">Albums</a> | <a href = "Users.html">Users</a>
+        </div>
+        <p id = "userprofile">User Profile</p>
+        <div id = "profilecontent">
+            <div id = "data_and_albums">
+                <section>
+                    <span id = "name">NAME </span>
+                    <br>
+                    Username: <span id = "uname"></span>
+                    <br>
+                    Email: <span id = "email"></span>
+                    <br>
+                    Address: <span id = "address"></span>
+                    <br>
+                    Zip Code: <span id = "zipcode"></span>
+                    <br>
+                    Phone: <span id = "phone"></span>
+                    <br>
+                    Website: <span id = "website"></span>
+                    <br>
+                    Company: <span id = "company"></span>
+                    <br>
+                    Catchphrase: <span id = "catchphrase"></span>
+                    <br>
+                    BS: <span id = "bs"></span>
+                </section>
+                <div id = "albumbox">
+                    <i>Latest Photo Albums</i>
+                    <div id = "imgbox">
+                    </div>
+                    <button>See More</button>
+                </div>
+            </div>
+            <div id = posts>
+                <i>Latest Posts</i>
+            </div>
+        </div>
+    </body>
+</html>
